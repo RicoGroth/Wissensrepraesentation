@@ -1,5 +1,7 @@
 #!/usr/bin/python -tt
 
+from math import ceil
+
 # Additional basic string exercises
 
 # D. verbing
@@ -10,8 +12,13 @@
 # If the string length is less than 3, leave it unchanged.
 # Return the resulting string.
 def verbing(s):
-  # +++your code here+++
-  return
+  if len(s) > 2:
+    ending = s[-3:-1] + s[-1]
+    if ending == 'ing':
+      s += 'ly'
+    else:
+      s += 'ing'
+  return s
 
 
 # E. not_bad
@@ -23,8 +30,10 @@ def verbing(s):
 # So 'This dinner is not that bad!' yields:
 # This dinner is good!
 def not_bad(s):
-  # +++your code here+++
-  return
+  a, b = s.find('not'), s.find('bad')
+  if a < b:
+    s = s[0:a] + 'good' + s[b + 3:]
+  return s
 
 
 # F. front_back
@@ -35,8 +44,9 @@ def not_bad(s):
 # Given 2 strings, a and b, return a string of the form
 #  a-front + b-front + a-back + b-back
 def front_back(a, b):
-  # +++your code here+++
-  return
+  a_split = ceil(len(a)/2)
+  b_split = ceil(len(b)/2)
+  return a[0:a_split] + b[0:b_split] + a[a_split:] + b[b_split:]
 
 
 # Simple provided test() function used in main() to print
