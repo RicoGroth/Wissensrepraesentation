@@ -1,46 +1,56 @@
 #!/usr/bin/python -tt
 
-"""Wordcount exercise
-
-
-The main() below is already defined and complete. It calls print_words()
-and print_top() functions which you write.
-
-1. For the --count flag, implement a print_words(filename) function that counts
-how often each word appears in the text and prints:
-word1 count1
-word2 count2
-...
-
-Print the above list in order sorted by word (python will sort punctuation to
-come before letters -- that's fine). Store all the words as lowercase,
-so 'The' and 'the' count as the same word.
-
-2. For the --topcount flag, implement a print_top(filename) which is similar
-to print_words() but which prints just the top 20 most common words sorted
-so the most common word is first, then the next most common, and so on.
-
-Use str.split() (no arguments) to split on all whitespace.
-
-Workflow: don't build the whole program at once. Get it to an intermediate
-milestone and print your data structure and sys.exit(0).
-When that's working, try for the next milestone.
-
-Optional: define a helper function to avoid code duplication inside
-print_words() and print_top().
-
-"""
+"""Wordcount exercise"""
 
 import sys
 
-# +++your code here+++
-# Define print_words(filename) and print_top(filename) functions.
-# You could write a helper utility function that reads a file
-# and builds and returns a word/count dict for it.
-# Then print_words() and print_top() can just call the utility function.
+def file_to_dict(filename):
+  d = {}
+  with open(filename) as file:
+    for line in file:
+      words = line.split()
+      for word in words:
+        d[word.lower()] = d.get(word.lower(), 0) + 1
+  return d
+    
+
+# 1. For the --count flag, implement a print_words(filename) function that counts
+# how often each word appears in the text and prints:
+# word1 count1
+# word2 count2
+# ...
+
+# Print the above list in order sorted by word (python will sort punctuation to
+# come before letters -- that's fine). Store all the words as lowercase,
+# so 'The' and 'the' count as the same word.
+def print_words(filename):
+  words = file_to_dict(filename).items()
+  for entry in words:
+    print(entry)
+
+# 2. For the --topcount flag, implement a print_top(filename) which is similar
+# to print_words() but which prints just the top 20 most common words sorted
+# so the most common word is first, then the next most common, and so on.
+
+# Use str.split() (no arguments) to split on all whitespace.
+
+# Workflow: don't build the whole program at once. Get it to an intermediate
+# milestone and print your data structure and sys.exit(0).
+# When that's working, try for the next milestone.
+
+# Optional: define a helper function to avoid code duplication inside
+# print_words() and print_top().
+def print_top(filename):
+  words = file_to_dict(filename)
+  sorted_words = sorted(words.items(), key=lambda x: x[1], reverse=True)
+  for i, entry in enumerate(sorted_words):
+    if i > 20:
+      break
+    print(entry)
 
 ###
-
+# The main() below is already defined and complete. It calls print_words()
+# and print_top() functions which you write.
 # This basic command line argument parsing code is provided and
 # calls the print_words() and print_top() functions which you must define.
 def main():
